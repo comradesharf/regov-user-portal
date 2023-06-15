@@ -12,8 +12,8 @@ export default function Breadcrumbs({}: BreadcrumbsProps) {
     const pathname = usePathname();
 
     return (
-        <div className={cn("prose", "mx-auto", "max-w-6xl", "px-2")}>
-            <div className={cn("breadcrumbs", "text-sm")}>
+        <div className={cn("prose", "mx-auto", "max-w-6xl", "px-1")}>
+            <div className={cn("breadcrumbs", "text-xs", "md:text-sm")}>
                 <ul>
                     <li>
                         <Link href="/users">
@@ -24,8 +24,17 @@ export default function Breadcrumbs({}: BreadcrumbsProps) {
                         .split("/")
                         .filter(Boolean)
                         .map((segment) => (
-                            <li key={segment} className={cn("uppercase")}>
-                                {segment}
+                            <li key={segment} className={cn("uppercase", "max-w-[200px]")}>
+                                <span
+                                    className={cn(
+                                        "overflow-hidden",
+                                        "whitespace-nowrap",
+                                        "overflow-ellipsis",
+                                        "max-w-xs"
+                                    )}
+                                >
+                                    {segment}
+                                </span>
                             </li>
                         ))}
                 </ul>
