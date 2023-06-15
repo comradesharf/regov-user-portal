@@ -3,6 +3,7 @@
 import cn from "#root/_libs/cn";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export type BreadcrumbsProps = {};
@@ -15,7 +16,9 @@ export default function Breadcrumbs({}: BreadcrumbsProps) {
             <div className={cn("breadcrumbs", "text-sm")}>
                 <ul>
                     <li>
-                        <FontAwesomeIcon icon={faHome} />
+                        <Link href="/users">
+                            <FontAwesomeIcon icon={faHome} />
+                        </Link>
                     </li>
                     {pathname
                         .split("/")
