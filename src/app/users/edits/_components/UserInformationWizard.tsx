@@ -21,20 +21,20 @@ export default function UserInformationWizard({
 
     return (
         <Swiper>
-            <SwiperSlide className={cn("py-20")}>
+            <SwiperSlide className={cn("pb-10", "pt-10")}>
                 <UserInformationForm
                     userInformation={userInformation}
                     onUpdate={setUserInformation}
                 />
             </SwiperSlide>
-            <SwiperSlide className={cn("py-20")}>
+            <SwiperSlide className={cn("pb-10", "pt-10")}>
                 <UserUploadForm
                     user={user}
                     userInformation={userInformation}
                     onUpdate={setUserInformation}
                 />
             </SwiperSlide>
-            <SwiperSlide className={cn("py-20")}>
+            <SwiperSlide className={cn("pb-10", "pt-10")}>
                 <UserInformationPreview userInformation={userInformation} user={user} />
             </SwiperSlide>
         </Swiper>

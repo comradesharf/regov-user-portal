@@ -26,28 +26,30 @@ export default async function Page({}: PageProps) {
     const allUserInformationSnapshot = await UserInformationServerActions.getAllUserInformation();
 
     return (
-        <div className={cn("prose", "mx-auto", "h-[60vh]", "max-w-6xl", "px-10")}>
+        <div className={cn("prose", "mx-auto", "h-[60vh]", "max-w-6xl", "px-3")}>
             <h2>Registered Users</h2>
             <p>List of registered users</p>
 
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Full Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {allUserInformationSnapshot.docs.map((doc) => (
-                        <Link key={doc.id} href={`/users/${doc.id}`} legacyBehavior>
-                            <tr className={cn("hover", "cursor-pointer")}>
-                                <th>{doc.id}</th>
-                                <td>{doc.data()!.fullName}</td>
-                            </tr>
-                        </Link>
-                    ))}
-                </tbody>
-            </table>
+            <div className={cn("overflow-x-auto")}>
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {allUserInformationSnapshot.docs.map((doc) => (
+                            <Link key={doc.id} href={`/users/${doc.id}`} legacyBehavior>
+                                <tr className={cn("hover", "cursor-pointer")}>
+                                    <th>{doc.id}</th>
+                                    <td>{doc.data()!.fullName}</td>
+                                </tr>
+                            </Link>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }

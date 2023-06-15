@@ -29,7 +29,7 @@ export default async function Page({ params: { uid } }: PageProps) {
     }
 
     return (
-        <div className={cn("mx-auto", "max-w-2xl", "prose")}>
+        <div className={cn("mx-auto", "max-w-2xl", "prose", "px-2")}>
             <h2>Submitted by {session!.uid === uid ? "you" : currentUserInformation?.fullName}</h2>
             <UserInformationPreview userInformation={currentUserInformation} />
         </div>
