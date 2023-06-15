@@ -1,3 +1,5 @@
+"use client";
+
 import useDeleteFile from "#root/_hooks/useDeleteFile";
 import useSecureFileUrl from "#root/_hooks/useSecureFileUrl";
 import cn from "#root/_libs/cn";

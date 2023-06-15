@@ -23,9 +23,21 @@ export default async function Page({}: PageProps) {
         <div className={cn("prose", "mx-auto", "h-[60vh]", "max-w-6xl", "pt-5", "px-10")}>
             <h2>Welcome, {userInformation.fullName}!</h2>
             <p>You have registered with us.</p>
-            <Link href="/users/edits" className={cn("btn", "btn-primary", "btn-sm")}>
-                Edit registration
-            </Link>
+
+            <div className={cn("flex", "gap-1", "flex-wrap")}>
+                <Link
+                    href={`/users/${session?.uid}`}
+                    className={cn("btn", "btn-primary", "btn-sm", "btn-wide", "btn-outline")}
+                >
+                    View
+                </Link>
+                <Link
+                    href="/users/edits"
+                    className={cn("btn", "btn-primary", "btn-sm", "btn-wide")}
+                >
+                    Edit
+                </Link>
+            </div>
         </div>
     );
 }
