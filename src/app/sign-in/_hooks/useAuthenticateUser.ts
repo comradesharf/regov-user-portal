@@ -8,16 +8,25 @@ import { useDeferredValue } from "react";
 export default function useAuthenticateUser() {
     const user = useUser();
 
+    let uid: string | undefined | null;
+    if (user === undefined) {
+        uid = undefined;
+    } else if (user === null) {
+        uid = null;
+    } else {
+        uid = user.uid;
+    }
+
     const router = useRouter();
 
     const { isFetching } = useQuery({
-        queryKey: ["RedirectResult", user] as const,
+        queryKey: ["RedirectResult", uid] as const,
         queryFn: async () => {
             const app = createFirebaseApp();
 
             const auth = getAuth(app);
 
-            if (user) {
+            if (uid) {
                 router.push("/users");
                 return null;
             }
@@ -32,5 +41,5 @@ export default function useAuthenticateUser() {
         },
     });
 
-    return useDeferredValue(user === undefined || isFetching);
+    return useDeferredValue(uid === undefined || isFetching);
 }

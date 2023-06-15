@@ -49,7 +49,7 @@ export default function TextInput<
                 type={type}
                 autoFocus={autoFocus}
                 {...field}
-                className={cn("input", "input-bordered", "input-sm", {
+                className={cn("input", "input-bordered", "input-sm", "input-primary", {
                     "w-full": fullWidth,
                     "input-error": fieldState.invalid,
                 })}

@@ -38,78 +38,81 @@ export default function Page({}: PageProps) {
         );
     }
 
-    if (formStep === "sign-up") {
-        return <SignUpUserForm email={form.getValues("email")} />;
-    }
-
-    if (formStep === "sign-in") {
-        return <SignInUserForm email={form.getValues("email")} />;
-    }
-
     return (
-        <div className={cn("prose", "card", "shadow-xl", "mx-auto", "max-w-xl")}>
-            <form
-                className={cn("card-body")}
-                noValidate
-                onSubmit={form.handleSubmit(async (value) => {
-                    const response = await fetch("/api/users/emails", {
-                        body: JSON.stringify(value),
-                        method: "POST",
-                    });
+        <div className={cn("pt-20")}>
+            {formStep === "sign-up" ? <SignUpUserForm email={form.getValues("email")} /> : null}
+            {formStep === "sign-in" ? <SignInUserForm email={form.getValues("email")} /> : null}
+            {formStep === "validate" ? (
+                <div className={cn("prose", "card", "shadow-xl", "mx-auto", "max-w-xl")}>
+                    <form
+                        className={cn("card-body")}
+                        noValidate
+                        onSubmit={form.handleSubmit(async (value) => {
+                            const response = await fetch("/api/users/emails", {
+                                body: JSON.stringify(value),
+                                method: "POST",
+                            });
 
-                    if (!response.ok) {
-                        return;
-                    }
+                            if (!response.ok) {
+                                return;
+                            }
 
-                    const { valid, provider } = Schemas.EmailValidationResponse.parse(
-                        await response.json()
-                    );
+                            const { valid, provider } = Schemas.EmailValidationResponse.parse(
+                                await response.json()
+                            );
 
-                    if (!valid) {
-                        setFormStep("sign-up");
-                        return;
-                    }
+                            if (!valid) {
+                                setFormStep("sign-up");
+                                return;
+                            }
 
-                    if (valid && provider) {
-                        setFormStep("sign-in");
-                        return;
-                    }
+                            if (valid && provider) {
+                                setFormStep("sign-in");
+                                return;
+                            }
 
-                    if (valid && !provider) {
-                        showToast({
-                            type: "error",
-                            message: "Use sign with Google instead of sign in with email.",
-                        });
-                        return;
-                    }
-                })}
-            >
-                <p className={cn("card-title")}>Sign in to Portal</p>
-
-                <button
-                    type="button"
-                    className={cn("btn", "btn-outline", "btn-primary", "btn-sm", "w-full")}
-                    disabled={signInWithGoogle.isLoading}
-                    onClick={() => signInWithGoogle.mutate()}
-                >
-                    <FontAwesomeIcon icon={faGoogle} className="mr-3" />
-                    Continue with Google
-                </button>
-
-                <div className={cn("divider")}>OR</div>
-
-                <TextInput name="email" control={form.control} placeholder="Email" fullWidth />
-
-                <div className={cn("card-actions")}>
-                    <button
-                        className={cn("btn", "btn-sm", "btn-primary", "w-full")}
-                        disabled={form.formState.isSubmitting}
+                            if (valid && !provider) {
+                                showToast({
+                                    type: "error",
+                                    message: "Use sign with Google instead of sign in with email.",
+                                });
+                                return;
+                            }
+                        })}
                     >
-                        {form.formState.isSubmitting ? "Validating..." : "Next"}
-                    </button>
+                        <p className={cn("card-title")}>Sign in to Portal</p>
+
+                        <button
+                            type="button"
+                            className={cn("btn", "btn-outline", "btn-primary", "btn-sm", "w-full")}
+                            disabled={signInWithGoogle.isLoading}
+                            onClick={() => signInWithGoogle.mutate()}
+                        >
+                            <FontAwesomeIcon icon={faGoogle} className="mr-3" />
+                            Continue with Google
+                        </button>
+
+                        <div className={cn("divider")}>OR</div>
+
+                        <TextInput
+                            name="email"
+                            control={form.control}
+                            placeholder="Email"
+                            fullWidth
+                        />
+
+                        <div className={cn("card-actions")}>
+                            <button
+                                className={cn("btn", "btn-sm", "btn-primary", "w-full")}
+                                disabled={form.formState.isSubmitting}
+                            >
+                                {form.formState.isSubmitting ? "Validating..." : "Next"}
+                            </button>
+                        </div>
+                    </form>
+                    {toast}
                 </div>
-            </form>
-            {toast}
+            ) : null}
         </div>
     );
 }

@@ -9,11 +9,11 @@ export const createFirebaseApp = once(() => {
 
     const app = initializeApp(JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_CONFIG!));
 
-    if (process.env.NODE_ENV !== "development") return app;
-
-    connectAuthEmulator(getAuth(app), "http://localhost:9099");
-    connectFirestoreEmulator(getFirestore(app), "localhost", 8080);
-    connectStorageEmulator(getStorage(app), "localhost", 9199);
+    if (process.env.NODE_ENV === "development") {
+        connectAuthEmulator(getAuth(app), "http://localhost:9099");
+        connectFirestoreEmulator(getFirestore(app), "localhost", 8080);
+        connectStorageEmulator(getStorage(app), "localhost", 9199);
+    }
 
     return app;
 });

@@ -3,6 +3,7 @@ import QueryClientProvider from "#root/_components/QueryClientProvider";
 import cn from "#root/_libs/cn";
 import Fonts from "#root/_libs/Fonts";
 import "#root/globals.css";
+import "swiper/css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import type { ReactNode } from "react";
