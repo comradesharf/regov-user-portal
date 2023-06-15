@@ -1,5 +1,5 @@
 name: deploy-storage-rules
-run-name: Deploy Storage Rules
+run-name: Deploy storage rules
 on:
     pull_request:
         paths:
