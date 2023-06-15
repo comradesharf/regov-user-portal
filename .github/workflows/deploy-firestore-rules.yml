@@ -1,5 +1,5 @@
 name: deploy-firestore-rules
-run-name: Deploy Firestore Rules
+run-name: Deploy firestore rules
 on:
     pull_request:
         paths:
