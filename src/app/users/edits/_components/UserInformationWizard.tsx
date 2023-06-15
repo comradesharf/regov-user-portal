@@ -36,7 +36,7 @@ export default function UserInformationWizard({
                 />
             </SwiperSlide>
             <SwiperSlide className={cn("py-20")}>
-                <UserInformationPreview userInformation={userInformation} />
+                <UserInformationPreview userInformation={userInformation} user={user} />
             </SwiperSlide>
         </Swiper>
     );

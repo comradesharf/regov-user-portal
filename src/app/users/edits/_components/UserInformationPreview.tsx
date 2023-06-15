@@ -3,17 +3,22 @@ import useUpdateUserInformation from "#root/_hooks/useUpdateUserInformation";
 import cn from "#root/_libs/cn";
 import * as Schemas from "#root/_libs/Schemas";
 import UIP from "#root/users/_components/UserInformationPreview";
+import { User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useSwiper } from "swiper/react";
 
 export type UserInformationPreviewProps = {
     userInformation?: Schemas.UserInformationType;
+    user: Pick<User, "uid">;
 };
 
-export default function UserInformationPreview({ userInformation }: UserInformationPreviewProps) {
+export default function UserInformationPreview({
+    userInformation,
+    user,
+}: UserInformationPreviewProps) {
     const swiper = useSwiper();
 
-    const updateUserInformation = useUpdateUserInformation();
+    const updateUserInformation = useUpdateUserInformation({ user });
 
     const router = useRouter();
 
