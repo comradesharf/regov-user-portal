@@ -7,7 +7,13 @@ import { once } from "lodash-es";
 export const createFirebaseApp = once(() => {
     if (getApps().length) return getApp();
 
-    const app = initializeApp(JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_CONFIG!));
+    const config = JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_CONFIG!);
+
+    if (process.env.NODE_ENV === "production") {
+        config.authDomain = location.hostname;
+    }
+
+    const app = initializeApp(config);
     const auth = getAuth(app);
     const db = getFirestore(app);
     const storage = getStorage(app);

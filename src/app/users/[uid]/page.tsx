@@ -11,22 +11,27 @@ export type PageProps = {
 export default async function Page({ params: { uid } }: PageProps) {
     const session = await AuthServerActions.decodeSessionCookie();
 
-    if (session!.uid !== uid) {
+    const [sessionUserInformationSnapshot, currentUserInformationSnapshot] = await Promise.all([
+        UserInformationServerActions.getUserInformation(session!.uid),
+        UserInformationServerActions.getUserInformation(uid),
+    ]);
+
+    if (!currentUserInformationSnapshot.exists || !sessionUserInformationSnapshot.exists) {
         notFound();
     }
 
-    const userInformationSnapshot = await UserInformationServerActions.getUserInformation(uid);
+    const currentUserInformation = currentUserInformationSnapshot.data()!;
 
-    if (!userInformationSnapshot.exists) {
+    const sessionUserInformation = sessionUserInformationSnapshot.data()!;
+
+    if (!sessionUserInformation!.isAdmin && session!.uid !== uid) {
         notFound();
     }
-
-    const userInformation = userInformationSnapshot.data();
 
     return (
         <div className={cn("mx-auto", "max-w-2xl", "prose")}>
-            <h2>Submitted by {session!.uid === uid ? "you" : userInformation?.fullName}</h2>
-            <UserInformationPreview userInformation={userInformation} />
+            <h2>Submitted by {session!.uid === uid ? "you" : currentUserInformation?.fullName}</h2>
+            <UserInformationPreview userInformation={currentUserInformation} />
         </div>
     );
 }

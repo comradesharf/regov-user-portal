@@ -56,6 +56,17 @@ export default function UserDashboard({ userInformation, user }: UserDashboardPr
                     </label>
                 </div>
             </div>
+
+            {userInformation.isAdmin ? (
+                <div className={cn("flex", "gap-1", "flex-wrap")}>
+                    <Link
+                        href="/users/list"
+                        className={cn("btn", "btn-primary", "btn-sm", "btn-wide", "btn-outline")}
+                    >
+                        List
+                    </Link>
+                </div>
+            ) : null}
         </div>
     );
 }

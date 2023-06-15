@@ -7,7 +7,6 @@ export type PageProps = {};
 
 export default async function Page({}: PageProps) {
     const session = await AuthServerActions.decodeSessionCookie();
-    console.log({ session });
 
     const userInformationSnapshot = await UserInformationServerActions.getUserInformation(
         session!.uid

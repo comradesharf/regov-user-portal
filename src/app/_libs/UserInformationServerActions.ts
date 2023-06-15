@@ -17,3 +17,19 @@ export async function getUserInformation(uid: string) {
         })
         .get();
 }
+
+export async function getAllUserInformation() {
+    const app = createFirebaseApp();
+    const db = getFirestore(app);
+    return await db
+        .collection("users")
+        .withConverter({
+            fromFirestore(snapshot) {
+                return Schemas.UserInformation.parse(snapshot.data());
+            },
+            toFirestore(modelObject) {
+                return modelObject;
+            },
+        })
+        .get();
+}
