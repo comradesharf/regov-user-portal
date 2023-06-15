@@ -48,6 +48,7 @@ export default function UserInformationPreview({
                                 type: "info",
                                 message: "Information updated",
                             });
+                            router.refresh();
                             router.push("/users");
                         }}
                     >
