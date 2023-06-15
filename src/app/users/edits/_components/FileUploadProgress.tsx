@@ -3,6 +3,7 @@ import cn from "#root/_libs/cn";
 export type FileUploadProgressProps = { progress: number };
 
 export default function FileUploadProgress({ progress }: FileUploadProgressProps) {
+    const roundedProgress = Math.round(progress);
     return (
         <div
             className={cn(
@@ -30,11 +31,11 @@ export default function FileUploadProgress({ progress }: FileUploadProgressProps
                 )}
                 style={
                     {
-                        "--value": progress,
+                        "--value": roundedProgress,
                     } as any
                 }
             >
-                {progress}%
+                {roundedProgress}%
             </div>
         </div>
     );
