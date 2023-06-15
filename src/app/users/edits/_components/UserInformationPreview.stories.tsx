@@ -11,6 +11,7 @@ const meta: Meta<typeof UserInformationPreview> = {
             address: "KL Eco\n City59200 Kuala Lumpur, Federal Territory of Kuala Lumpur",
             age: 20,
             job: "Manager",
+            isAdmin: true,
         },
     },
 };

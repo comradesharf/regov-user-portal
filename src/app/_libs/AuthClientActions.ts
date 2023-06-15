@@ -6,7 +6,7 @@ export async function signUpWithEmail(email: string, password: string) {
     const app = createFirebaseApp();
     const auth = getAuth(app);
     const { user } = await createUserWithEmailAndPassword(auth, email, password);
-    const response = await fetch("/auth", {
+    const response = await fetch("/auth/callback", {
         method: "POST",
         body: await user.getIdToken(),
     });
@@ -21,7 +21,7 @@ export async function signInWithEmail(email: string, password: string) {
     const app = createFirebaseApp();
     const auth = getAuth(app);
     const { user } = await signInWithEmailAndPassword(auth, email, password);
-    const response = await fetch("/auth", {
+    const response = await fetch("/auth/callback", {
         method: "POST",
         body: await user.getIdToken(),
     });

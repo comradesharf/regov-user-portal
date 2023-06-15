@@ -5,13 +5,12 @@ import * as Schemas from "#root/_libs/Schemas";
 import UserInformationForm from "#root/users/edits/_components/UserInformationForm";
 import UserInformationPreview from "#root/users/edits/_components/UserInformationPreview";
 import UserUploadForm from "#root/users/edits/_components/UserUploadForm";
-import { User } from "firebase/auth";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 export type UserInformationWizardProps = {
     userInformation?: Schemas.UserInformationType;
-    user: Pick<User, "uid">;
+    user: { uid: string };
 };
 
 export default function UserInformationWizard({

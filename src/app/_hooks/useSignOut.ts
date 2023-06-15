@@ -12,7 +12,7 @@ export default function useSignOut() {
             const auth = getAuth(app);
             await signOut(auth);
 
-            const response = await fetch("/auth", {
+            const response = await fetch("/auth/callback", {
                 method: "DELETE",
             });
 

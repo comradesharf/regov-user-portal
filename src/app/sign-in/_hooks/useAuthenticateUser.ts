@@ -18,7 +18,7 @@ export default function useAuthenticateUser() {
 
             const { user } = result;
 
-            const response = await fetch("/auth", {
+            const response = await fetch("/auth/callback", {
                 method: "POST",
                 body: await user.getIdToken(),
             });

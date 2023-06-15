@@ -29,6 +29,14 @@ export const UserInformation = zod.object({
     address: zod.string().trim().min(1, "Address is required"),
     job: zod.string().trim().min(1, "Job is required"),
     passports: zod.array(zod.string()).optional().default([]),
+    isAdmin: zod.boolean().optional().default(false),
 });
 
 export type UserInformationType = zod.infer<typeof UserInformation>;
+
+export const UpdateClaim = zod.object({
+    idToken: zod.string(),
+    claims: zod.any(),
+});
+
+export type UpdateClaimType = zod.infer<typeof UpdateClaim>;

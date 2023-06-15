@@ -1,4 +1,4 @@
-import { getAuth } from "firebase-admin/auth";
+import * as AuthServerActions from "#root/_libs/AuthServerActions";
 import { NextRequest } from "next/server";
 
 const ExpiresIn = 60 * 60 * 24 * 5 * 1000;
@@ -6,23 +6,20 @@ const ExpiresIn = 60 * 60 * 24 * 5 * 1000;
 export async function POST(request: NextRequest) {
     try {
         const idToken = await request.text();
-
         if (!idToken) {
             return new Response("Id token required!", {
                 status: 400,
             });
         }
-        const decodedIdToken = await getAuth().verifyIdToken(idToken);
 
-        if (new Date().getTime() / 1000 - decodedIdToken.auth_time >= 5 * 60) {
+        const decodedIdToken = await AuthServerActions.verifyIdToken(idToken);
+        if (!decodedIdToken) {
             return new Response("Recent sign in required!", {
                 status: 401,
             });
         }
 
-        const sessionCookie = await getAuth().createSessionCookie(idToken, {
-            expiresIn: ExpiresIn,
-        });
+        const sessionCookie = await AuthServerActions.createSessionCookie(idToken, ExpiresIn);
 
         return new Response(null, {
             headers: {

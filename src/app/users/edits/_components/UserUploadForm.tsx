@@ -7,14 +7,13 @@ import FilePreview from "#root/users/edits/_components/FilePreview";
 import FileUploadInput from "#root/users/edits/_components/FileUploadInput";
 import FileUploadProgress from "#root/users/edits/_components/FileUploadProgress";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { User } from "firebase/auth";
 import { UploadTask } from "firebase/storage";
 import { useCallback, useDeferredValue } from "react";
 import { useForm } from "react-hook-form";
 import { useSwiper } from "swiper/react";
 
 export type UserUploadFormProps = {
-    user: Pick<User, "uid">;
+    user: { uid: string };
     userInformation?: Schemas.UserInformationType;
     onUpdate: (value: Schemas.UserInformationType) => void;
 };

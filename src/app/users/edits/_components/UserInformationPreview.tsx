@@ -1,15 +1,14 @@
+import useSetUserInformation from "#root/_hooks/useSetUserInformation";
 import useToast from "#root/_hooks/useToast";
-import useUpdateUserInformation from "#root/_hooks/useUpdateUserInformation";
 import cn from "#root/_libs/cn";
 import * as Schemas from "#root/_libs/Schemas";
 import UIP from "#root/users/_components/UserInformationPreview";
-import { User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useSwiper } from "swiper/react";
 
 export type UserInformationPreviewProps = {
     userInformation?: Schemas.UserInformationType;
-    user: Pick<User, "uid">;
+    user: { uid: string };
 };
 
 export default function UserInformationPreview({
@@ -18,7 +17,7 @@ export default function UserInformationPreview({
 }: UserInformationPreviewProps) {
     const swiper = useSwiper();
 
-    const updateUserInformation = useUpdateUserInformation({ user });
+    const setUserInformation = useSetUserInformation({ user });
 
     const router = useRouter();
 
@@ -35,16 +34,16 @@ export default function UserInformationPreview({
                     <button
                         className={cn("btn", "btn-sm", "btn-primary", "btn-outline")}
                         onClick={() => swiper.slidePrev()}
-                        disabled={updateUserInformation.isLoading}
+                        disabled={setUserInformation.isLoading}
                     >
                         Back
                     </button>
                     <button
                         className={cn("btn", "btn-sm", "btn-primary")}
-                        disabled={updateUserInformation.isLoading}
+                        disabled={setUserInformation.isLoading}
                         onClick={async () => {
                             if (!userInformation) return;
-                            await updateUserInformation.mutateAsync(userInformation);
+                            await setUserInformation.mutateAsync(userInformation);
                             showToast({
                                 type: "info",
                                 message: "Information updated",
