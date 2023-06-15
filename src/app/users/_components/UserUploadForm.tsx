@@ -36,6 +36,15 @@ export default function UserUploadForm({ userInformation, onUpdate }: UserUpload
         [form]
     );
 
+    const deleteFn = useCallback(
+        (path: string) => {
+            form.setValue("passports", [
+                ...form.getValues("passports").filter((value) => value !== path),
+            ]);
+        },
+        [form]
+    );
+
     const { inputProps, state, progress } = useFileUpload({
         prefix: `files/${user?.uid}`,
         accept: "image/png,image/jpg,image/jpeg",
@@ -48,7 +57,7 @@ export default function UserUploadForm({ userInformation, onUpdate }: UserUpload
     const swiper = useSwiper();
 
     return (
-        <div className={cn("card", "prose", "mx-auto", "max-w-2xl", "shadow-xl")}>
+        <div className={cn("card", "prose", "mx-auto", "max-w-2xl", "shadow-xl", "card-compact")}>
             <form className={cn("card-body")} noValidate>
                 <h6 className={cn("card-title")}>Identity Card/Passport</h6>
                 <Watch
@@ -59,9 +68,20 @@ export default function UserUploadForm({ userInformation, onUpdate }: UserUpload
                             <div
                                 className={cn("rounded-2xl", "min-h-[400px]", "bg-gray-100", "p-2")}
                             >
-                                <div className={cn("flex-wrap", "gap-2", "flex")}>
+                                <div
+                                    className={cn(
+                                        "grid",
+                                        "grid-cols-2",
+                                        "sm:grid-cols-4",
+                                        "gap-y-2"
+                                    )}
+                                >
                                     {passports.map((passport) => (
-                                        <FilePreview path={passport} key={passport} />
+                                        <FilePreview
+                                            path={passport}
+                                            key={passport}
+                                            onDelete={deleteFn}
+                                        />
                                     ))}
                                     {deferredState === "running" ? (
                                         <FileUploadProgress progress={progress} />

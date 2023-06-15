@@ -24,7 +24,7 @@ export default function UserInformationForm({
     const swiper = useSwiper();
 
     return (
-        <div className={cn("card", "prose", "mx-auto", "max-w-2xl", "shadow-xl")}>
+        <div className={cn("card", "prose", "mx-auto", "max-w-2xl", "shadow-xl", "card-compact")}>
             <form
                 className={cn("card-body")}
                 onSubmit={form.handleSubmit(async (value) => {

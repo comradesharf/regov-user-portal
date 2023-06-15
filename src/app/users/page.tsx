@@ -5,6 +5,7 @@ import useUser from "#root/_hooks/useUser";
 import cn from "#root/_libs/cn";
 import * as Schemas from "#root/_libs/Schemas";
 import UserInformationForm from "#root/users/_components/UserInformationForm";
+import UserInformationPreview from "#root/users/_components/UserInformationPreview";
 import UserUploadForm from "#root/users/_components/UserUploadForm";
 import useUserInformation from "#root/users/_hooks/useUserInformation";
 import { useDeferredValue, useEffect, useState } from "react";
@@ -48,6 +49,9 @@ export default function Page({}: PageProps) {
                     userInformation={updatedUserInformation}
                     onUpdate={setUpdatedUserInformation}
                 />
+            </SwiperSlide>
+            <SwiperSlide className={cn("py-20")}>
+                <UserInformationPreview userInformation={updatedUserInformation} />
             </SwiperSlide>
         </Swiper>
     );

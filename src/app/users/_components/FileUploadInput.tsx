@@ -25,7 +25,8 @@ export default function FileUploadInput({ inputProps }: FileUploadInputProps) {
                 "flex",
                 "justify-center",
                 "items-center",
-                "cursor-pointer"
+                "cursor-pointer",
+                "justify-self-center"
             )}
         >
             <FontAwesomeIcon icon={faPlus} size="xl" />
