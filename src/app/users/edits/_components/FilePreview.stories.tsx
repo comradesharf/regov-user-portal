@@ -1,4 +1,4 @@
-import FilePreview from "#root/users//_components/FilePreview";
+import FilePreview from "#root/users/edits/_components/FilePreview";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof FilePreview> = {

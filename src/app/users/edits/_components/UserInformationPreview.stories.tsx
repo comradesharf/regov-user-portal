@@ -1,4 +1,4 @@
-import UserInformationPreview from "#root/users//_components/UserInformationPreview";
+import UserInformationPreview from "#root/users/edits/_components/UserInformationPreview";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof UserInformationPreview> = {

@@ -1,30 +1,29 @@
 import Watch from "#root/_components/forms/Watch";
 import useFileUpload from "#root/_hooks/useFileUpload";
-import useUser from "#root/_hooks/useUser";
 import cn from "#root/_libs/cn";
 import * as Schemas from "#root/_libs/Schemas";
-import EmptyFileUpload from "#root/users/_components/EmptyFileUpload";
-import FilePreview from "#root/users/_components/FilePreview";
-import FileUploadInput from "#root/users/_components/FileUploadInput";
-import FileUploadProgress from "#root/users/_components/FileUploadProgress";
+import EmptyFileUpload from "#root/users/edits/_components/EmptyFileUpload";
+import FilePreview from "#root/users/edits/_components/FilePreview";
+import FileUploadInput from "#root/users/edits/_components/FileUploadInput";
+import FileUploadProgress from "#root/users/edits/_components/FileUploadProgress";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { User } from "firebase/auth";
 import { UploadTask } from "firebase/storage";
 import { useCallback, useDeferredValue } from "react";
 import { useForm } from "react-hook-form";
 import { useSwiper } from "swiper/react";
 
 export type UserUploadFormProps = {
+    user: Pick<User, "uid">;
     userInformation?: Schemas.UserInformationType;
-    onUpdate: (value?: Schemas.UserInformationType) => void;
+    onUpdate: (value: Schemas.UserInformationType) => void;
 };
 
-export default function UserUploadForm({ userInformation, onUpdate }: UserUploadFormProps) {
+export default function UserUploadForm({ userInformation, onUpdate, user }: UserUploadFormProps) {
     const form = useForm<Schemas.UserInformationType>({
         values: userInformation,
         resolver: zodResolver(Schemas.UserInformation),
     });
-
-    const user = useUser();
 
     const completeFn = useCallback(
         (task: UploadTask) => {
@@ -46,7 +45,7 @@ export default function UserUploadForm({ userInformation, onUpdate }: UserUpload
     );
 
     const { inputProps, state, progress } = useFileUpload({
-        prefix: `files/${user?.uid}`,
+        prefix: `files/${user.uid}`,
         accept: "image/png,image/jpg,image/jpeg",
         id: "file-upload",
         completeFn,
@@ -71,8 +70,8 @@ export default function UserUploadForm({ userInformation, onUpdate }: UserUpload
                                 <div
                                     className={cn(
                                         "grid",
+                                        "sm:grid-cols-5",
                                         "grid-cols-2",
-                                        "sm:grid-cols-4",
                                         "gap-y-2"
                                     )}
                                 >

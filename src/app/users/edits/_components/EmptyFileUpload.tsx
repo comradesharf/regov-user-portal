@@ -1,6 +1,6 @@
 import { Options } from "#root/_hooks/useFileUpload";
 import cn from "#root/_libs/cn";
-import FileUploadInput from "#root/users/_components/FileUploadInput";
+import FileUploadInput from "#root/users/edits/_components/FileUploadInput";
 
 export type EmptyFileUploadProps = {
     inputProps: Options;

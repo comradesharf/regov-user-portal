@@ -52,13 +52,15 @@ export default function useFileUpload({ prefix = "", accept, id, completeFn, err
         () => {
             if (!task) return 0;
             return (task.snapshot.bytesTransferred / task.snapshot.totalBytes) * 100;
-        }
+        },
+        () => 0
     );
 
     const state = useSyncExternalStore(
         (onStoreChange) => () =>
             task?.on("state_changed", onStoreChange, onStoreChange, onStoreChange),
-        () => task?.snapshot?.state
+        () => task?.snapshot?.state,
+        () => undefined
     );
 
     const onChange = useCallback(

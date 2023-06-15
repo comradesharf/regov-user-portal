@@ -1,7 +1,9 @@
+import useToast from "#root/_hooks/useToast";
 import useUpdateUserInformation from "#root/_hooks/useUpdateUserInformation";
 import cn from "#root/_libs/cn";
 import * as Schemas from "#root/_libs/Schemas";
-import FilePreview from "#root/users/_components/FilePreview";
+import FilePreview from "#root/users/edits/_components/FilePreview";
+import { useRouter } from "next/navigation";
 import { useSwiper } from "swiper/react";
 
 export type UserInformationPreviewProps = {
@@ -12,6 +14,10 @@ export default function UserInformationPreview({ userInformation }: UserInformat
     const swiper = useSwiper();
 
     const updateUserInformation = useUpdateUserInformation();
+
+    const router = useRouter();
+
+    const { toast, showToast } = useToast();
 
     return (
         <div className={cn("card", "mx-auto", "max-w-2xl", "shadow-xl", "card-compact")}>
@@ -42,7 +48,7 @@ export default function UserInformationPreview({ userInformation }: UserInformat
                     <h4>Identity Card/Passport</h4>
                     {userInformation?.passports?.length ? (
                         <div className={cn("rounded-2xl", "min-h-[400px]", "bg-gray-100", "p-2")}>
-                            <div className={cn("grid", "grid-cols-2", "sm:grid-cols-4", "gap-y-2")}>
+                            <div className={cn("grid", "grid-cols-2", "sm:grid-cols-5", "gap-y-2")}>
                                 {userInformation.passports.map((passport) => (
                                     <FilePreview path={passport} key={passport} readonly />
                                 ))}
@@ -89,15 +95,20 @@ export default function UserInformationPreview({ userInformation }: UserInformat
                         className={cn("btn", "btn-sm", "btn-primary")}
                         disabled={updateUserInformation.isLoading}
                         onClick={async () => {
-                            if (userInformation) {
-                                await updateUserInformation.mutateAsync(userInformation);
-                            }
+                            if (!userInformation) return;
+                            await updateUserInformation.mutateAsync(userInformation);
+                            showToast({
+                                type: "info",
+                                message: "Information updated",
+                            });
+                            router.push("/users");
                         }}
                     >
                         Submit
                     </button>
                 </div>
             </article>
+            {toast}
         </div>
     );
 }

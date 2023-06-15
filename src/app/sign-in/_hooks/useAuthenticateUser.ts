@@ -1,4 +1,3 @@
-import useUser from "#root/_hooks/useUser";
 import { createFirebaseApp } from "#root/_libs/FirebaseWebUtils";
 import { useQuery } from "@tanstack/react-query";
 import { getAuth, getRedirectResult } from "firebase/auth";
@@ -6,40 +5,35 @@ import { useRouter } from "next/navigation";
 import { useDeferredValue } from "react";
 
 export default function useAuthenticateUser() {
-    const user = useUser();
-
-    let uid: string | undefined | null;
-    if (user === undefined) {
-        uid = undefined;
-    } else if (user === null) {
-        uid = null;
-    } else {
-        uid = user.uid;
-    }
-
     const router = useRouter();
 
     const { isFetching } = useQuery({
-        queryKey: ["RedirectResult", uid] as const,
+        queryKey: ["RedirectResult"] as const,
         queryFn: async () => {
             const app = createFirebaseApp();
-
             const auth = getAuth(app);
-
-            if (uid) {
-                router.push("/users");
-                return null;
-            }
-
             const result = await getRedirectResult(auth);
 
             if (!result) return null;
 
-            router.push("/users");
+            const { user } = result;
+
+            const response = await fetch("/auth", {
+                method: "POST",
+                body: await user.getIdToken(),
+            });
+
+            if (!response.ok) {
+                const error = new Error();
+                error.code = "auth/invalid";
+                throw error;
+            }
+
+            router.refresh();
 
             return null;
         },
     });
 
-    return useDeferredValue(uid === undefined || isFetching);
+    return useDeferredValue(isFetching);
 }

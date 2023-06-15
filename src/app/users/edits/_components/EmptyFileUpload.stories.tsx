@@ -1,4 +1,4 @@
-import EmptyFileUpload from "#root/users//_components/EmptyFileUpload";
+import EmptyFileUpload from "#root/users/edits/_components/EmptyFileUpload";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof EmptyFileUpload> = {

@@ -9,7 +9,7 @@ import { useSwiper } from "swiper/react";
 
 export type UserInformationFormProps = {
     userInformation?: Schemas.UserInformationType;
-    onUpdate: (value?: Schemas.UserInformationType) => void;
+    onUpdate: (value: Schemas.UserInformationType) => void;
 };
 
 export default function UserInformationForm({

@@ -1,4 +1,4 @@
-import FileUploadInput from "#root/users//_components/FileUploadInput";
+import FileUploadInput from "#root/users/edits/_components/FileUploadInput";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof FileUploadInput> = {

@@ -1,4 +1,4 @@
-import FileUploadProgress from "#root/users//_components/FileUploadProgress";
+import FileUploadProgress from "#root/users/edits/_components/FileUploadProgress";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof FileUploadProgress> = {

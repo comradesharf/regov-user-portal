@@ -1,4 +1,4 @@
-import UserUploadForm from "#root/users/_components/UserUploadForm";
+import UserUploadForm from "#root/users/edits/_components/UserUploadForm";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof UserUploadForm> = {

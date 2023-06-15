@@ -11,8 +11,18 @@ export default function useSignOut() {
             const app = createFirebaseApp();
             const auth = getAuth(app);
             await signOut(auth);
-            router.push("/sign-in");
-            return null;
+
+            const response = await fetch("/auth", {
+                method: "DELETE",
+            });
+
+            if (!response.ok) {
+                const error = new Error();
+                error.code = "auth/invalid";
+                throw error;
+            }
+
+            router.refresh();
         },
     });
 }

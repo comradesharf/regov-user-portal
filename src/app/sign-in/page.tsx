@@ -3,6 +3,7 @@
 import TextInput from "#root/_components/forms/TextInput";
 import Loader from "#root/_components/Loader";
 import useToast from "#root/_hooks/useToast";
+import * as AuthClientActions from "#root/_libs/AuthClientActions";
 import cn from "#root/_libs/cn";
 import * as Schemas from "#root/_libs/Schemas";
 import SignInUserForm from "#root/sign-in/_components/SignInUserForm";
@@ -47,19 +48,11 @@ export default function Page({}: PageProps) {
                     <form
                         className={cn("card-body")}
                         noValidate
-                        onSubmit={form.handleSubmit(async (value) => {
-                            const response = await fetch("/api/users/emails", {
-                                body: JSON.stringify(value),
-                                method: "POST",
-                            });
+                        onSubmit={form.handleSubmit(async ({ email }) => {
+                            const response = await AuthClientActions.validateEmail(email);
+                            if (!response) return;
 
-                            if (!response.ok) {
-                                return;
-                            }
-
-                            const { valid, provider } = Schemas.EmailValidationResponse.parse(
-                                await response.json()
-                            );
+                            const { valid, provider } = response;
 
                             if (!valid) {
                                 setFormStep("sign-up");

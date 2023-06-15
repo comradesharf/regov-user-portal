@@ -1,15 +1,15 @@
 "use client";
 
 import useSignOut from "#root/_hooks/useSignOut";
-import useUser from "#root/_hooks/useUser";
 import cn from "#root/_libs/cn";
+import { User } from "firebase/auth";
 import Link from "next/link";
 
-export type HeaderProps = {};
+export type HeaderProps = {
+    user?: Pick<User, "uid">;
+};
 
-export default function Header({}: HeaderProps) {
-    const user = useUser();
-
+export default function Header({ user }: HeaderProps) {
     const signOut = useSignOut();
 
     return (

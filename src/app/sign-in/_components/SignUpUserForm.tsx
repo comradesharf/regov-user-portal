@@ -1,10 +1,9 @@
 import TextInput from "#root/_components/forms/TextInput";
 import useToast from "#root/_hooks/useToast";
+import * as AuthClientActions from "#root/_libs/AuthClientActions";
 import cn from "#root/_libs/cn";
-import { createFirebaseApp } from "#root/_libs/FirebaseWebUtils";
 import * as Schemas from "#root/_libs/Schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
@@ -29,11 +28,9 @@ export default function SignUpUserForm({ email }: SignUpUserFormProps) {
             <form
                 className={cn("card-body")}
                 noValidate
-                onSubmit={form.handleSubmit(async (value) => {
+                onSubmit={form.handleSubmit(async ({ email, password }) => {
                     try {
-                        const app = createFirebaseApp();
-                        const auth = getAuth(app);
-                        await createUserWithEmailAndPassword(auth, value.email, value.password);
+                        await AuthClientActions.signUpWithEmail(email, password);
                         showToast({
                             type: "info",
                             message: "You have been signed up.",
@@ -41,6 +38,12 @@ export default function SignUpUserForm({ email }: SignUpUserFormProps) {
                         router.push("/users");
                     } catch (e: any) {
                         switch (e?.code) {
+                            case "auth/invalid":
+                                showToast({
+                                    type: "error",
+                                    message: "Unable to sign up now. Try again later.",
+                                });
+                                break;
                             default:
                                 console.error("Sign up with email failed", e);
                                 showToast({

@@ -1,4 +1,4 @@
-import UserInformationForm from "#root/users/_components/UserInformationForm";
+import UserInformationForm from "#root/users/edits/_components/UserInformationForm";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof UserInformationForm> = {
